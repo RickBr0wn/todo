@@ -1,6 +1,6 @@
 import React from 'react'
 import { cleanup, render } from '@testing-library/react'
-import TodoList from '../components/TodoList'
+import App from '../App'
 import { TodoProvider } from '../components/TodoStore'
 
 afterEach(cleanup)
@@ -11,33 +11,31 @@ const AllTheProviders = ({ children }) => {
 
 const customRender = (ui, options) => render(ui, { wrapper: AllTheProviders, ...options })
 
-describe('<TodoList/>', () => {
-	it('should display a list of <TodoItem /> equal to the `todoItems.length`', () => {
+describe('<App/>', () => {
+	it('should render a single <TodoList/>', () => {
 		const props = [
 			{
-				id: 1,
+				id: 0,
 				title: 'Walk the dog'
 			},
 			{
-				id: 2,
+				id: 1,
 				title: 'Feed the dog'
 			},
 			{
-				id: 3,
+				id: 2,
 				title: 'Wash the dog'
 			}
 		]
 
-		const { getByText, getAllByTestId } = customRender(
+		const { getByTestId, getAllByTestId } = customRender(
 			<TodoProvider>
-				<TodoList todoItems={props} />
+				<App />
 			</TodoProvider>
 		)
 
-		expect(getByText(/walk/i)).toBeInTheDocument()
-		expect(getByText(/feed/i)).toBeInTheDocument()
-		expect(getByText(/wash/i)).toBeInTheDocument()
-
-		expect(getAllByTestId('todo-item')).toHaveLength(3)
+		expect(getByTestId('todo-list')).toBeInTheDocument()
+		expect(getAllByTestId('todo-list')).toHaveLength(1)
+		expect(true).toBe(true)
 	})
 })

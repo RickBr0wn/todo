@@ -1,13 +1,14 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import TodoItem from './TodoItem'
+import { useTodoStateContext } from './TodoStore'
 
-const TodoList = ({ todoItems }) => {
-	return <ul>{todoItems.map((todo) => <TodoItem key={todo.id} title={todo.title} />)}</ul>
-}
-
-TodoList.propTypes = {
-	todoItems: PropTypes.array.isRequired
+const TodoList = () => {
+	const { state } = useTodoStateContext()
+	return (
+		<ul data-testid='todo-list'>
+			{state.todos && state.todos.map((todo) => <TodoItem key={todo.id} title={todo.title} />)}
+		</ul>
+	)
 }
 
 export default TodoList

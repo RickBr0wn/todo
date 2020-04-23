@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 const TodoItem = ({ title }) => {
 	const [ completed, setCompleted ] = useState(false)
 	return (
-		<li style={styles.container}>
+		<li data-testid='todo-item' style={styles.container}>
 			<p>{title}</p>
 			<p>{completed ? 'complete' : null}</p>
 			<button onClick={() => setCompleted((prev) => !prev)}>click</button>

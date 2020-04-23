@@ -1,51 +1,33 @@
 import React from 'react'
-import { fireEvent, render } from '@testing-library/react'
-import App from '../App'
+import { cleanup, fireEvent, render } from '@testing-library/react'
 import TodoItem from '../components/TodoItem'
 
 // Arrange - Act - Assert
 
-const props = {
-	id: 0,
-	title: 'Walk the dog',
-	completed: false,
-	setCompleted: jest.fn()
-}
+afterEach(cleanup)
 
 describe('<TodoItem/>', () => {
 	it('should render the todo item', () => {
-		const { getByText } = render(<TodoItem {...props} />)
-		expect(getByText('Walk the dog')).toBeInTheDocument()
-	})
-
-	it('should display `complete` when the completed prop changes', () => {
-		const propsWithTrue = {
+		const props = {
 			id: 0,
-			title: 'Walk the dog',
-			completed: true,
-			setCompleted: jest.fn()
+			title: 'Walk the dog'
 		}
 
-		const { queryByText, getByText, rerender } = render(<TodoItem {...props} />)
-		expect(queryByText('complete')).not.toBeInTheDocument()
-
-		rerender(<TodoItem {...propsWithTrue} />)
-		expect(getByText('complete')).toBeInTheDocument()
+		const { getByText } = render(<TodoItem {...props} />)
+		expect(true).toBe(true)
+		expect(getByText('Walk the dog')).toBeInTheDocument()
 	})
 
 	it('should render a button that switches the completed status', () => {
 		const props = {
 			id: 0,
-			title: 'Walk the dog',
-			completed: false,
-			setCompleted: jest.fn()
+			title: 'Walk the dog'
 		}
-		const { queryByText, getByText } = render(
-			<App>
-				<TodoItem {...props} />
-			</App>
-		)
+
+		const { queryByText, getByText } = render(<TodoItem {...props} />)
+
 		const button = getByText(/click/i)
+
 		expect(button).toBeInTheDocument()
 		expect(queryByText('complete')).not.toBeInTheDocument()
 
